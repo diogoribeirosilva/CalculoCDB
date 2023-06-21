@@ -1,0 +1,20 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  /* Estilos para telas menores que 768px */
+  h2 {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+}
