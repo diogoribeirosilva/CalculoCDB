@@ -1,4 +1,5 @@
-﻿using CalculoCDB.Application.Commands;
+﻿using CalculoCDB.API.Validators;
+using CalculoCDB.Application.Commands;
 using CalculoCDB.Application.DTO.DTO;
 using CalculoCDB.Application.Queries;
 using MediatR;
@@ -11,10 +12,12 @@ namespace CalculoCDB.API.Controllers
     public class InvestimentoController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly InvestimentoValidator _investimentoValidator;
 
-        public InvestimentoController(IMediator mediator)
+        public InvestimentoController(IMediator mediator, InvestimentoValidator investimentoValidator)
         {
             _mediator = mediator;
+            _investimentoValidator = investimentoValidator;
         }
 
         [HttpGet("{investimentoId}")]
@@ -32,8 +35,9 @@ namespace CalculoCDB.API.Controllers
         [HttpPost]
         public async Task<ActionResult<InvestimentoDto>> CalcularInvestimento([FromBody] CalcularInvestimentoCommand command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var validationResult = await _investimentoValidator.ValidateAsync(command);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors);
 
             var investimentoDto = await _mediator.Send(command);
 

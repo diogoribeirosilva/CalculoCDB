@@ -3,10 +3,14 @@ using CalculoCDB.Application.Queries;
 using CalculoCDB.Domain.Interfaces.Repositories;
 using CalculoCDB.Domain.Models;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CalculoCDB.Application.Handlers
 {
-    public class ObterInvestimentoQueryHandler : IRequestHandler<ObterInvestimentoQuery, InvestimentoDto>
+    public class ObterInvestimentoQueryHandler : IRequestHandler<ObterInvestimentoQuery, List<InvestimentoDto>>
     {
         private readonly IInvestimentoRepository _investimentoRepository;
 
@@ -15,7 +19,7 @@ namespace CalculoCDB.Application.Handlers
             _investimentoRepository = investimentoRepository ?? throw new ArgumentNullException(nameof(investimentoRepository));
         }
 
-        public async Task<InvestimentoDto> Handle(ObterInvestimentoQuery query, CancellationToken cancellationToken)
+        public async Task<List<InvestimentoDto>> Handle(ObterInvestimentoQuery query, CancellationToken cancellationToken)
         {
             Investimento investimento = await ObterInvestimento(query.InvestimentoId);
 
@@ -24,10 +28,13 @@ namespace CalculoCDB.Application.Handlers
                 throw new InvalidOperationException("Investimento não encontrado.");
             }
 
-            var investimentoDto = new InvestimentoDto
+            var investimentoDto = new List<InvestimentoDto>
             {
-                ValorBruto = investimento.ValorBruto,
-                ValorLiquido = investimento.ValorLiquido
+                new InvestimentoDto
+                {
+                    ValorBruto = investimento.ValorBruto,
+                    ValorLiquido = investimento.ValorLiquido
+                }
             };
 
             return investimentoDto;

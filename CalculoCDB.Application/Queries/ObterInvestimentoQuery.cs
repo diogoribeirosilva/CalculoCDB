@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using System.Collections.Generic;
 using CalculoCDB.Application.DTO.DTO;
 
 namespace CalculoCDB.Application.Queries
 {
-    public class ObterInvestimentoQuery : IRequest<InvestimentoDto>
+    public class ObterInvestimentoQuery : IRequest<List<InvestimentoDto>>
     {
         public int InvestimentoId { get; set; }
 

@@ -17,13 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0 - Domain", "4.0 - Domai
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.0 - Infrastruture", "5.0 - Infrastruture", "{DBC82D0B-455C-4CFF-A49A-2F2A592B78C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoCDB.Application", "CalculoCDB.Application\CalculoCDB.Application.csproj", "{48230B41-41D9-4BA4-9EBF-2B6AD4579B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculoCDB.Application", "CalculoCDB.Application\CalculoCDB.Application.csproj", "{48230B41-41D9-4BA4-9EBF-2B6AD4579B9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoCDB.Domain", "CalculoCDB.Domain\CalculoCDB.Domain.csproj", "{1A88BC62-39C5-463E-A356-EFE310512CA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculoCDB.Domain", "CalculoCDB.Domain\CalculoCDB.Domain.csproj", "{1A88BC62-39C5-463E-A356-EFE310512CA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoCDB.Infrastruture.Repository", "CalculoCDB.Infrastruture.Repository\CalculoCDB.Infrastruture.Repository.csproj", "{CBDC2BE8-AB30-4816-9DA1-B8347BB69ED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculoCDB.Infrastruture.Repository", "CalculoCDB.Infrastruture.Repository\CalculoCDB.Infrastruture.Repository.csproj", "{CBDC2BE8-AB30-4816-9DA1-B8347BB69ED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoCDB.Application.DTO", "CalculoCDB.Application.DTO\CalculoCDB.Application.DTO.csproj", "{AD7F1EE3-C168-4AA5-B730-48DDD6A72020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalculoCDB.Application.DTO", "CalculoCDB.Application.DTO\CalculoCDB.Application.DTO.csproj", "{AD7F1EE3-C168-4AA5-B730-48DDD6A72020}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.0 - Tests", "0.0 - Tests", "{22ECF672-2C1E-4496-BB23-24E6842F5581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculoCDB.Tests", "CalculoCDB.Tests\CalculoCDB.Tests.csproj", "{DC0B34C8-1B4D-409C-8D08-CE6B7428D4C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +61,10 @@ Global
 		{AD7F1EE3-C168-4AA5-B730-48DDD6A72020}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD7F1EE3-C168-4AA5-B730-48DDD6A72020}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD7F1EE3-C168-4AA5-B730-48DDD6A72020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC0B34C8-1B4D-409C-8D08-CE6B7428D4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC0B34C8-1B4D-409C-8D08-CE6B7428D4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC0B34C8-1B4D-409C-8D08-CE6B7428D4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC0B34C8-1B4D-409C-8D08-CE6B7428D4C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +76,7 @@ Global
 		{1A88BC62-39C5-463E-A356-EFE310512CA0} = {B4C57073-C64B-417E-99AB-2E0C7C59F5EF}
 		{CBDC2BE8-AB30-4816-9DA1-B8347BB69ED2} = {DBC82D0B-455C-4CFF-A49A-2F2A592B78C2}
 		{AD7F1EE3-C168-4AA5-B730-48DDD6A72020} = {6DD460F3-AC5D-42B3-908B-D2AD77FC06E8}
+		{DC0B34C8-1B4D-409C-8D08-CE6B7428D4C5} = {22ECF672-2C1E-4496-BB23-24E6842F5581}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {882B4795-9F25-4F4D-9281-599830979FA9}

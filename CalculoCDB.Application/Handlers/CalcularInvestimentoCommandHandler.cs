@@ -9,7 +9,7 @@ namespace CalculoCDB.Application.Handlers
         public Task<InvestimentoDto> Handle(CalcularInvestimentoCommand command, CancellationToken cancellationToken)
         {
             // Realiza o cálculo do investimento com base nos parâmetros fornecidos
-            decimal valorFinal = CalcularValorFinal(command.ValorInicial, command.PrazoMeses);
+            decimal valorFinal = CalcularValorFinal(command.ValorInicial);
             decimal valorLiquido = CalcularValorLiquido(valorFinal, command.PrazoMeses);
 
             // Cria o DTO de resposta com os resultados do investimento
@@ -23,7 +23,7 @@ namespace CalculoCDB.Application.Handlers
             return Task.FromResult(investimentoDto);
         }
 
-        private decimal CalcularValorFinal(decimal valorInicial, int prazoMeses)
+        private decimal CalcularValorFinal(decimal valorInicial)
         {
             // Obtém a taxa de CDI e o valor de TB do banco
             decimal taxaCDI = 0.009m; // 0,9%
