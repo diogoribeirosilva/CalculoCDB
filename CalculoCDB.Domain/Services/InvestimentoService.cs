@@ -10,60 +10,63 @@ namespace CalculoCDB.Domain.Services
 
         public Investimento CalcularInvestimento(decimal valorInicial, int prazoMeses)
         {
-            decimal valorFinal = CalcularValorFinal(valorInicial, Cdi, TaxaBanco, prazoMeses);
+            decimal valorFinal = CalcularValorFinal(valorInicial, prazoMeses);
             decimal valorLiquido = CalcularValorLiquido(valorFinal, prazoMeses);
 
-            Investimento investimento = CriarInvestimento(valorInicial, prazoMeses, Cdi, TaxaBanco, valorFinal, valorLiquido);
+            Investimento investimento = CriarInvestimento(valorInicial, prazoMeses, valorFinal, valorLiquido);
 
             return investimento;
         }
 
-        static decimal CalcularValorFinal(decimal valorInicial, decimal cdi, decimal taxaBanco, int prazoMeses)
+        private static decimal CalcularValorFinal(decimal valorInicial, int prazoMeses)
         {
             decimal valorFinal = valorInicial;
 
             for (int i = 0; i < prazoMeses; i++)
             {
-                valorFinal *= (1 + (cdi * taxaBanco));
+                valorFinal *= (1 + Cdi * TaxaBanco);
             }
 
             return valorFinal;
         }
 
-        static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
+        private static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
         {
-            decimal taxaImposto;
+            decimal taxaImposto = ObterTaxaImposto(prazoMeses);
 
-            if (prazoMeses <= 6)
-            {
-                taxaImposto = 0.225m;
-            }
-            else if (prazoMeses <= 12)
-            {
-                taxaImposto = 0.2m;
-            }
-            else if (prazoMeses <= 24)
-            {
-                taxaImposto = 0.175m;
-            }
-            else
-            {
-                taxaImposto = 0.15m;
-            }
-
-            decimal valorLiquido = valorFinal - (valorFinal * taxaImposto);
+            decimal valorLiquido = valorFinal * (1 - taxaImposto);
 
             return valorLiquido;
         }
 
-        static Investimento CriarInvestimento(decimal valorInicial, int prazoMeses, decimal cdi, decimal taxaBanco, decimal valorFinal, decimal valorLiquido)
+        private static decimal ObterTaxaImposto(int prazoMeses)
+        {
+            if (prazoMeses <= 6)
+            {
+                return 0.225m;
+            }
+            else if (prazoMeses <= 12)
+            {
+                return 0.2m;
+            }
+            else if (prazoMeses <= 24)
+            {
+                return 0.175m;
+            }
+            else
+            {
+                return 0.15m;
+            }
+        }
+
+        private static Investimento CriarInvestimento(decimal valorInicial, int prazoMeses, decimal valorFinal, decimal valorLiquido)
         {
             Investimento investimento = new()
             {
                 ValorInicial = valorInicial,
                 PrazoMeses = prazoMeses,
-                Cdi = cdi,
-                TaxaBanco = taxaBanco,
+                Cdi = Cdi,
+                TaxaBanco = TaxaBanco,
                 ValorBruto = valorFinal,
                 ValorLiquido = valorLiquido
             };

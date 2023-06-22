@@ -1,9 +1,5 @@
 ﻿using CalculoCDB.Domain.Interfaces.Repositories;
 using CalculoCDB.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CalculoCDB.Infrastruture.Repository.Repositories
 {

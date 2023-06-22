@@ -2,7 +2,6 @@
 {
     public class Investimento
     {
-        public int Id { get; set; }
         public decimal ValorInicial { get; set; }
         public int PrazoMeses { get; set; }
         public decimal Cdi { get; set; }

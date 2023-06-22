@@ -13,7 +13,7 @@ namespace CalculoCDB.Application.Handlers
 
         public CalcularInvestimentoCommandHandler(IMediator mediator)
         {
-            _mediator = mediator;
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         public async Task<InvestimentoDto> Handle(CalcularInvestimentoCommand command, CancellationToken cancellationToken)
