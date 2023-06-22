@@ -15,13 +15,6 @@ namespace CalculoCDB.Infrastruture.Repository.Repositories
         {
             _investimentos = new List<Investimento>();
         }
-
-        public Task<Investimento> ObterPorId(int investimentoId)
-        {
-            Investimento investimento = _investimentos.FirstOrDefault(i => i.Id == investimentoId);
-            return Task.FromResult(investimento);
-        }
-
         public Task<IEnumerable<Investimento>> ObterTodos()
         {
             IEnumerable<Investimento> investimentos = _investimentos;

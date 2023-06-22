@@ -1,32 +1,24 @@
-﻿using CalculoCDB.Domain.Interfaces.Repositories;
-using CalculoCDB.Domain.Interfaces.Services;
+﻿using CalculoCDB.Domain.Interfaces.Services;
 using CalculoCDB.Domain.Models;
 
 namespace CalculoCDB.Domain.Services
 {
     public class InvestimentoService : IInvestimentoService
     {
-        private readonly IInvestimentoRepository _investimentoRepository;
-
-        public InvestimentoService(IInvestimentoRepository investimentoRepository)
-        {
-            _investimentoRepository = investimentoRepository;
-        }
+        private const decimal TaxaBanco = 1.08m;
+        private const decimal Cdi = 0.009m;
 
         public Investimento CalcularInvestimento(decimal valorInicial, int prazoMeses)
         {
-            decimal taxaBanco = 1.08m; // 108%
-            decimal cdi = 0.009m; // 0.9%
-
-            decimal valorFinal = CalcularValorFinal(valorInicial, cdi, taxaBanco, prazoMeses);
+            decimal valorFinal = CalcularValorFinal(valorInicial, Cdi, TaxaBanco, prazoMeses);
             decimal valorLiquido = CalcularValorLiquido(valorFinal, prazoMeses);
 
-            Investimento investimento = CriarInvestimento(valorInicial, prazoMeses, cdi, taxaBanco, valorFinal, valorLiquido);
+            Investimento investimento = CriarInvestimento(valorInicial, prazoMeses, Cdi, TaxaBanco, valorFinal, valorLiquido);
 
             return investimento;
         }
 
-        private decimal CalcularValorFinal(decimal valorInicial, decimal cdi, decimal taxaBanco, int prazoMeses)
+        static decimal CalcularValorFinal(decimal valorInicial, decimal cdi, decimal taxaBanco, int prazoMeses)
         {
             decimal valorFinal = valorInicial;
 
@@ -38,25 +30,25 @@ namespace CalculoCDB.Domain.Services
             return valorFinal;
         }
 
-        private decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
+        static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
         {
             decimal taxaImposto;
 
             if (prazoMeses <= 6)
             {
-                taxaImposto = 0.225m; // 22.5%
+                taxaImposto = 0.225m;
             }
             else if (prazoMeses <= 12)
             {
-                taxaImposto = 0.2m; // 20%
+                taxaImposto = 0.2m;
             }
             else if (prazoMeses <= 24)
             {
-                taxaImposto = 0.175m; // 17.5%
+                taxaImposto = 0.175m;
             }
             else
             {
-                taxaImposto = 0.15m; // 15%
+                taxaImposto = 0.15m;
             }
 
             decimal valorLiquido = valorFinal - (valorFinal * taxaImposto);
@@ -64,9 +56,9 @@ namespace CalculoCDB.Domain.Services
             return valorLiquido;
         }
 
-        private Investimento CriarInvestimento(decimal valorInicial, int prazoMeses, decimal cdi, decimal taxaBanco, decimal valorFinal, decimal valorLiquido)
+        static Investimento CriarInvestimento(decimal valorInicial, int prazoMeses, decimal cdi, decimal taxaBanco, decimal valorFinal, decimal valorLiquido)
         {
-            Investimento investimento = new Investimento
+            Investimento investimento = new()
             {
                 ValorInicial = valorInicial,
                 PrazoMeses = prazoMeses,

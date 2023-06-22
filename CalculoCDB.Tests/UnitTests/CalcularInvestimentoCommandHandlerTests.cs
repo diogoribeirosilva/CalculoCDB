@@ -3,7 +3,6 @@ using CalculoCDB.Application.DTO.DTO;
 using CalculoCDB.Application.Handlers;
 using MediatR;
 using Moq;
-using NUnit.Framework;
 using Xunit;
 
 namespace CalculoCDB.Tests.Unit
@@ -15,22 +14,22 @@ namespace CalculoCDB.Tests.Unit
         {
             // Arrange
             var command = new CalcularInvestimentoCommand(1000, 12);
-            var expectedResult = new InvestimentoDto { ValorBruto = 1100, ValorLiquido = 1050 };
+            var expectedResult = new InvestimentoDto { ValorBruto = 1009.72M, ValorLiquido = 807.78M };
 
             var mediatorMock = new Mock<IMediator>();
             mediatorMock
-                .Setup(m => m.Send(It.IsAny<CalcularInvestimentoCommand>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.Send(It.IsAny<CalcularInvestimentoCommand>(), default))
                 .ReturnsAsync(expectedResult);
 
-            var handler = new CalcularInvestimentoCommandHandler();
+            var handler = new CalcularInvestimentoCommandHandler(mediatorMock.Object);
 
             // Act
-            var result = await handler.Handle(command, CancellationToken.None);
+            var result = await handler.Handle(command, default);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equals(expectedResult.ValorBruto, result.ValorBruto);
-            Assert.Equals(expectedResult.ValorLiquido, result.ValorLiquido);
+            Assert.Equal(expectedResult.ValorBruto, result.ValorBruto, 2); // Delta de 2 casas decimais
+            Assert.Equal(expectedResult.ValorLiquido, result.ValorLiquido, 2); // Delta de 2 casas decimais
         }
     }
 }

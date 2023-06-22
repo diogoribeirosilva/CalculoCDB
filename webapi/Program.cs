@@ -1,7 +1,4 @@
 using CalculoCDB.API.DependencyInjection;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +36,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors(); // Adicione esta linha para habilitar o CORS
+app.UseCors();
 
 app.MapControllers();
 
