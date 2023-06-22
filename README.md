@@ -112,9 +112,6 @@ Padrão Repository: O padrão Repository é utilizado para abstrair a lógica de
 
 Injeção de Dependência: A aplicação utiliza a injeção de dependência para facilitar o gerenciamento e a configuração das dependências entre os diferentes componentes do sistema.
 
-Entity Framework Core: O Entity Framework Core é utilizado como ORM (Object-Relational Mapping) para realizar a persistência dos dados no banco de dados.
-
-SQLite (banco de dados em memória para fins de teste): Para os testes, a aplicação utiliza um banco de dados SQLite em memória, o que permite a execução dos testes de forma isolada e rápida.
 
 ## Contribuição
 
