@@ -13,13 +13,13 @@
 
   <button (click)="calcularInvestimento()">Calcular</button>
 
-  <div *ngIf="resultadoBruto">
+  <div *ngIf="valorBruto">
     <h3>Resultado Bruto:</h3>
-    <p>{{ resultadoBruto | currency }}</p>
+    <p>{{ valorBruto | currency }}</p>
   </div>
 
-  <div *ngIf="resultadoLiquido">
+  <div *ngIf="valorLiquido">
     <h3>Resultado Líquido:</h3>
-    <p>{{ resultadoLiquido | currency }}</p>
+    <p>{{ valorLiquido | currency }}</p>
   </div>
 </div>

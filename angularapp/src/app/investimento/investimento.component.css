@@ -52,7 +52,6 @@ button {
   margin-right: auto;
 }
 
-/* Resultado */
 h3 {
   margin-top: 20px;
   text-align: center;
@@ -63,12 +62,11 @@ p {
   text-align: center;
 }
 
-/* Ocultar resultados inicialmente */
+
 [hidden] {
   display: none;
 }
 
-/* Estilos responsivos */
 @media (max-width: 480px) {
   .container {
     max-width: 300px;

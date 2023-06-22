@@ -23,6 +23,9 @@ namespace CalculoCDB.API.DependencyInjection
             // Validators
             services.AddScoped<IValidator<CalcularInvestimentoCommand>, InvestimentoValidator>();
 
+            //Tests
+            services.AddScoped<InvestimentoValidator>(); 
+
         }
     }
 }
