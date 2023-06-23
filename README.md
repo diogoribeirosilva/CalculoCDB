@@ -16,12 +16,12 @@ Siga as etapas abaixo para configurar e executar o backend da aplicação Calcul
 
 3. Execute o comando `dotnet run` para iniciar o servidor.
 
-4. O servidor será executado e estará disponível em https://localhost:5001.
+4. O servidor será executado e estará disponível em https://localhost:5001 (ou outro caminho configurado).
 Além disso, a aplicação CalculoCDB oferece uma documentação interativa com Swagger, que facilita a visualização e teste dos endpoints da API. Para acessar a documentação do Swagger, siga as etapas abaixo:
 
 Certifique-se de que o servidor do backend esteja em execução.
 
-Abra um navegador da web e acesse a URL https://localhost:5001/swagger.
+Abra um navegador da web e acesse a URL https://localhost:5001/swagger (ou outro caminho configurado). 
 
 A documentação do Swagger será exibida, mostrando todos os endpoints disponíveis, seus parâmetros e exemplos de uso.
 
@@ -61,8 +61,6 @@ Copy code
 {
   "valorBruto": 504.86,
   "valorLiquido": 391.2665,
-  "valorInicial": 0,
-  "prazoMeses": 0
 }
 O corpo da requisição deve incluir o valor inicial do investimento em "valorInicial" e o prazo em meses em "prazoMeses". A resposta incluirá o valor bruto do investimento em "valorBruto" e o valor líquido do investimento em "valorLiquido".
 
@@ -82,7 +80,7 @@ Siga as etapas abaixo para configurar e executar o frontend da aplicação Calcu
 
 4. Após a conclusão da instalação das dependências, execute o comando `npm start` para iniciar o servidor de desenvolvimento.
 
-5. O servidor de desenvolvimento será executado e o frontend estará disponível em http://localhost:4200.
+5. O servidor de desenvolvimento será executado e o frontend estará disponível em http://localhost:4200 (Ou outro configurado).
 
 ### Testes do Frontend
 
@@ -90,7 +88,7 @@ A aplicação CalculoCDB possui testes automatizados para garantir a qualidade e
 
 1. Certifique-se de ter concluído as etapas de configuração e instalação das dependências descritas acima.
 
-2. Abra uma janela de terminal e navegue até a pasta do frontend (calculocdb-frontend).
+2. Abra uma janela de terminal e navegue até a pasta do frontend (calculocdb-frontend - ou outra configurada).
 
 3. Execute o comando `npm test` para iniciar a execução dos testes.
 
@@ -111,12 +109,3 @@ Padrão Mediator: O padrão Mediator é utilizado para facilitar a comunicação
 Padrão Repository: O padrão Repository é utilizado para abstrair a lógica de acesso a dados, permitindo que as operações de persistência sejam realizadas de forma desacoplada da lógica de negócio.
 
 Injeção de Dependência: A aplicação utiliza a injeção de dependência para facilitar o gerenciamento e a configuração das dependências entre os diferentes componentes do sistema.
-
-
-## Contribuição
-
-Contribuições para aprimorar a aplicação CalculoCDB são bem-vindas! Se você encontrar algum problema, tiver ideias de novos recursos ou quiser fazer melhorias no código, fique à vontade para abrir uma issue ou enviar uma pull request.
-
-## Licença
-
-Esta aplicação está licenciada sob a MIT License.

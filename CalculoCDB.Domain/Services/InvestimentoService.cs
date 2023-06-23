@@ -1,5 +1,6 @@
 ﻿using CalculoCDB.Domain.Interfaces.Services;
 using CalculoCDB.Domain.Models;
+using System;
 
 namespace CalculoCDB.Domain.Services
 {
@@ -18,46 +19,50 @@ namespace CalculoCDB.Domain.Services
             return investimento;
         }
 
-        private static decimal CalcularValorFinal(decimal valorInicial, int prazoMeses)
+        public static decimal CalcularValorFinal(decimal valorInicial, int prazoMeses)
         {
+            decimal taxaCDI = 0.009m;
+            decimal taxaBanco = 1.08m;
             decimal valorFinal = valorInicial;
 
             for (int i = 0; i < prazoMeses; i++)
             {
-                valorFinal *= (1 + Cdi * TaxaBanco);
+                valorFinal *= (1 + taxaCDI * taxaBanco);
             }
 
-            return valorFinal;
+            return Math.Round(valorFinal, 2);
         }
 
-        private static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
+
+        public static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
         {
-            decimal taxaImposto = ObterTaxaImposto(prazoMeses);
+            decimal taxaImposto = ObterTaxaImposto(prazoMeses) / 100;
 
             decimal valorLiquido = valorFinal * (1 - taxaImposto);
 
             return valorLiquido;
         }
 
-        private static decimal ObterTaxaImposto(int prazoMeses)
+        public static decimal ObterTaxaImposto(int prazoMeses)
         {
             if (prazoMeses <= 6)
             {
-                return 0.225m;
+                return 22.5m;
             }
             else if (prazoMeses <= 12)
             {
-                return 0.2m;
+                return 20m;
             }
             else if (prazoMeses <= 24)
             {
-                return 0.175m;
+                return 17.5m;
             }
             else
             {
-                return 0.15m;
+                return 15m;
             }
         }
+
 
         private static Investimento CriarInvestimento(decimal valorInicial, int prazoMeses, decimal valorFinal, decimal valorLiquido)
         {
@@ -67,8 +72,8 @@ namespace CalculoCDB.Domain.Services
                 PrazoMeses = prazoMeses,
                 Cdi = Cdi,
                 TaxaBanco = TaxaBanco,
-                ValorBruto = valorFinal,
-                ValorLiquido = valorLiquido
+                ValorBruto = Math.Round(valorFinal, 2),
+                ValorLiquido = Math.Round(valorLiquido, 2)
             };
 
             return investimento;

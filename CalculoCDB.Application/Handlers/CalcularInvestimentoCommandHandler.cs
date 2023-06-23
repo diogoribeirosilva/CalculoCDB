@@ -4,72 +4,33 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using CalculoCDB.Domain.Interfaces.Services;
+using CalculoCDB.Domain.Models;
 
 namespace CalculoCDB.Application.Handlers
 {
     public class CalcularInvestimentoCommandHandler : IRequestHandler<CalcularInvestimentoCommand, InvestimentoDto>
     {
         private readonly IMediator _mediator;
+        private readonly IInvestimentoService _investimentoService;
 
-        public CalcularInvestimentoCommandHandler(IMediator mediator)
+        public CalcularInvestimentoCommandHandler(IMediator mediator, IInvestimentoService investimentoService)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _investimentoService = investimentoService ?? throw new ArgumentNullException(nameof(investimentoService));
         }
 
         public async Task<InvestimentoDto> Handle(CalcularInvestimentoCommand command, CancellationToken cancellationToken)
         {
-            decimal valorFinal = CalcularValorFinal(command.ValorInicial, command.PrazoMeses);
-            decimal valorLiquido = CalcularValorLiquido(valorFinal, command.PrazoMeses);
+            Investimento investimento = _investimentoService.CalcularInvestimento(command.ValorInicial, command.PrazoMeses);
 
             var investimentoDto = new InvestimentoDto
             {
-                ValorBruto = Math.Round(valorFinal, 2),
-                ValorLiquido = Math.Round(valorLiquido, 2)
+                ValorBruto = Math.Round(investimento.ValorBruto, 2),
+                ValorLiquido = Math.Round(investimento.ValorLiquido, 2)
             };
 
             return await Task.FromResult(investimentoDto);
-        }
-
-        private decimal CalcularValorFinal(decimal valorInicial, int prazoMeses)
-        {
-            decimal taxaCDI = 0.009m;
-            decimal taxaBanco = 1.08m;
-            decimal valorFinal = valorInicial;
-
-            for (int i = 0; i < prazoMeses; i++)
-            {
-                valorFinal *= (1 + taxaCDI * taxaBanco);
-            }
-
-            return valorFinal;
-        }
-
-        private decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
-        {
-            decimal taxaImposto = ObterTaxaImposto(prazoMeses);
-            decimal valorLiquido = valorFinal - (valorFinal * taxaImposto / 100);
-
-            return valorLiquido;
-        }
-
-        private decimal ObterTaxaImposto(int prazoMeses)
-        {
-            if (prazoMeses <= 6)
-            {
-                return 22.5m;
-            }
-            else if (prazoMeses <= 12)
-            {
-                return 20m;
-            }
-            else if (prazoMeses <= 24)
-            {
-                return 17.5m;
-            }
-            else
-            {
-                return 15m;
-            }
         }
     }
 }

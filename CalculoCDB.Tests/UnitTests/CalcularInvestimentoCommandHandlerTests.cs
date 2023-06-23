@@ -1,6 +1,8 @@
 ﻿using CalculoCDB.Application.Commands;
 using CalculoCDB.Application.DTO.DTO;
 using CalculoCDB.Application.Handlers;
+using CalculoCDB.Domain.Interfaces.Services;
+using CalculoCDB.Domain.Models;
 using MediatR;
 using Moq;
 using Xunit;
@@ -9,42 +11,26 @@ namespace CalculoCDB.Tests.Unit
 {
     public class CalcularInvestimentoCommandHandlerTests
     {
-        [Fact]
-        public async Task Handle_ValidCommand_ReturnsInvestimentoDto()
+        [Theory]
+        [InlineData(1000, 12, 1123.08, 898.47)]
+        [InlineData(1000, 6, 1059.76, 821.31)]
+        public async Task Handle_ValidCommand_ReturnsInvestimentoDto(decimal valorInicial, int prazoMeses, decimal valorBrutoEsperado, decimal valorLiquidoEsperado)
         {
             // Arrange
-            var command = new CalcularInvestimentoCommand(1000, 12);
-            var expectedResult = new InvestimentoDto { ValorBruto = 1123.08M, ValorLiquido = 898.47M };
+            var command = new CalcularInvestimentoCommand(valorInicial, prazoMeses);
+            var expectedResult = new Investimento
+            {
+                ValorBruto = valorBrutoEsperado,
+                ValorLiquido = valorLiquidoEsperado
+            };
 
             var mediatorMock = new Mock<IMediator>();
-            mediatorMock
-                .Setup(m => m.Send(It.IsAny<CalcularInvestimentoCommand>(), default))
-                .ReturnsAsync(expectedResult);
+            var investimentoServiceMock = new Mock<IInvestimentoService>();
+            investimentoServiceMock
+                .Setup(s => s.CalcularInvestimento(valorInicial, prazoMeses))
+                .Returns(expectedResult);
 
-            var handler = new CalcularInvestimentoCommandHandler(mediatorMock.Object);
-
-            // Act
-            var result = await handler.Handle(command, default);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(expectedResult.ValorBruto, result.ValorBruto);
-            Assert.Equal(expectedResult.ValorLiquido, result.ValorLiquido);
-        }
-
-        [Fact]
-        public async Task Handle_SixMonthsPrazoMeses_ReturnsInvestimentoDtoWithCorrectValues()
-        {
-            // Arrange
-            var command = new CalcularInvestimentoCommand(1000, 6);
-            var expectedResult = new InvestimentoDto { ValorBruto = 1059.76M, ValorLiquido = 821.31M };
-
-            var mediatorMock = new Mock<IMediator>();
-            mediatorMock
-                .Setup(m => m.Send(It.IsAny<CalcularInvestimentoCommand>(), default))
-                .ReturnsAsync(expectedResult);
-
-            var handler = new CalcularInvestimentoCommandHandler(mediatorMock.Object);
+            var handler = new CalcularInvestimentoCommandHandler(mediatorMock.Object, investimentoServiceMock.Object);
 
             // Act
             var result = await handler.Handle(command, default);

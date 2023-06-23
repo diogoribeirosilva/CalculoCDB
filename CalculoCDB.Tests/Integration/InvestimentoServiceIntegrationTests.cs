@@ -5,27 +5,33 @@ using Xunit;
 
 namespace CalculoCDB.Tests.Integration
 {
-    public class InvestimentoServiceIntegrationTests
+    public class InvestimentoServiceTests
     {
-        [Fact]
-        public void CalcularInvestimento_ReturnsCorrectInvestimento()
+        private readonly IInvestimentoService _investimentoService;
+
+        public InvestimentoServiceTests()
+        {
+            _investimentoService = new InvestimentoService();
+        }
+
+        [Theory]
+        [InlineData(1000, 12, 1123.08, 898.46)]
+        [InlineData(5000, 6, 5298.78, 4106.55)]
+        [InlineData(2500, 18, 2975.48, 2454.77)]
+        [InlineData(15000, 36, 21248.38, 18061.12)]
+        public void CalcularInvestimento_ValidValues_ReturnsInvestimento(decimal valorInicial, int prazoMeses, decimal valorBrutoEsperado, decimal valorLiquidoEsperado)
         {
             // Arrange
-            decimal valorInicial = 1000;
-            int prazoMeses = 12;
-            decimal expectedValorBruto = 1123.08m;
-            decimal expectedValorLiquido = 898.47m;
-
-            IInvestimentoService investimentoService = new InvestimentoService();
 
             // Act
-            Investimento investimento = investimentoService.CalcularInvestimento(valorInicial, prazoMeses);
+            Investimento investimento = _investimentoService.CalcularInvestimento(valorInicial, prazoMeses);
 
             // Assert
+            Assert.NotNull(investimento);
             Assert.Equal(valorInicial, investimento.ValorInicial);
             Assert.Equal(prazoMeses, investimento.PrazoMeses);
-            Assert.Equal(expectedValorBruto, investimento.ValorBruto, 2);
-            Assert.Equal(expectedValorLiquido, investimento.ValorLiquido, 2);
+            Assert.Equal(valorBrutoEsperado, decimal.Round(investimento.ValorBruto, 2));
+            Assert.Equal(valorLiquidoEsperado, decimal.Round(investimento.ValorLiquido, 2));
         }
     }
 }
