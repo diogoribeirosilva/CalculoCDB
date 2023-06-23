@@ -18,7 +18,7 @@ namespace CalculoCDB.Application.Handlers
 
         public async Task<InvestimentoDto> Handle(CalcularInvestimentoCommand command, CancellationToken cancellationToken)
         {
-            decimal valorFinal = CalcularValorFinal(command.ValorInicial);
+            decimal valorFinal = CalcularValorFinal(command.ValorInicial, command.PrazoMeses);
             decimal valorLiquido = CalcularValorLiquido(valorFinal, command.PrazoMeses);
 
             var investimentoDto = new InvestimentoDto
@@ -30,17 +30,21 @@ namespace CalculoCDB.Application.Handlers
             return await Task.FromResult(investimentoDto);
         }
 
-        private static decimal CalcularValorFinal(decimal valorInicial)
+        private decimal CalcularValorFinal(decimal valorInicial, int prazoMeses)
         {
             decimal taxaCDI = 0.009m;
-            decimal valorTB = 1.08m;
+            decimal taxaBanco = 1.08m;
+            decimal valorFinal = valorInicial;
 
-            decimal valorFinal = valorInicial * (decimal)Math.Pow((double)(1 + taxaCDI), (double)valorTB);
+            for (int i = 0; i < prazoMeses; i++)
+            {
+                valorFinal *= (1 + taxaCDI * taxaBanco);
+            }
 
             return valorFinal;
         }
 
-        private static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
+        private decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
         {
             decimal taxaImposto = ObterTaxaImposto(prazoMeses);
             decimal valorLiquido = valorFinal - (valorFinal * taxaImposto / 100);
@@ -48,7 +52,7 @@ namespace CalculoCDB.Application.Handlers
             return valorLiquido;
         }
 
-        private static decimal ObterTaxaImposto(int prazoMeses)
+        private decimal ObterTaxaImposto(int prazoMeses)
         {
             if (prazoMeses <= 6)
             {
