@@ -12,7 +12,7 @@ namespace CalculoCDB.Domain.Services
         public Investimento CalcularInvestimento(decimal valorInicial, int prazoMeses)
         {
             decimal valorFinal = CalcularValorFinal(valorInicial, prazoMeses);
-            decimal valorLiquido = CalcularValorLiquido(valorFinal, prazoMeses);
+            decimal valorLiquido = CalcularValorLiquido(valorInicial, valorFinal, prazoMeses);
 
             Investimento investimento = CriarInvestimento(valorInicial, prazoMeses, valorFinal, valorLiquido);
 
@@ -34,13 +34,15 @@ namespace CalculoCDB.Domain.Services
         }
 
 
-        public static decimal CalcularValorLiquido(decimal valorFinal, int prazoMeses)
+        public static decimal CalcularValorLiquido(decimal valorInicial, decimal valorFinal, int prazoMeses)
         {
             decimal taxaImposto = ObterTaxaImposto(prazoMeses) / 100;
 
-            decimal valorLiquido = valorFinal * (1 - taxaImposto);
+            decimal lucro = valorFinal - valorInicial;
+            decimal valorImposto = lucro * taxaImposto;
+            decimal valorLiquido = valorFinal - valorImposto;
 
-            return valorLiquido;
+            return Math.Round(valorLiquido, 2);
         }
 
         public static decimal ObterTaxaImposto(int prazoMeses)

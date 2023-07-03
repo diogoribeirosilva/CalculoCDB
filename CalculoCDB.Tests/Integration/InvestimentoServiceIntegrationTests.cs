@@ -15,10 +15,10 @@ namespace CalculoCDB.Tests.Integration
         }
 
         [Theory]
-        [InlineData(1000, 12, 1123.08, 898.46)]
-        [InlineData(5000, 6, 5298.78, 4106.55)]
-        [InlineData(2500, 18, 2975.48, 2454.77)]
-        [InlineData(15000, 36, 21248.38, 18061.12)]
+        [InlineData(1000, 12, 1123.08, 1098.46)]
+        [InlineData(5000, 6, 5298.78, 5231.55)]
+        [InlineData(2500, 18, 2975.48, 2892.27)]
+        [InlineData(15000, 36, 21248.38, 20311.12)]
         public void CalcularInvestimento_ValidValues_ReturnsInvestimento(decimal valorInicial, int prazoMeses, decimal valorBrutoEsperado, decimal valorLiquidoEsperado)
         {
             // Arrange
